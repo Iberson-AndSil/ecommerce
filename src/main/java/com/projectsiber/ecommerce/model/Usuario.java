@@ -1,6 +1,20 @@
 package com.projectsiber.ecommerce.model;
 
+import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "usuarios")
 public class Usuario {
+    @Id
+    // id autoincrementable
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nombre;
     private String username;
@@ -10,12 +24,18 @@ public class Usuario {
     private String tipo;
     private String password;
 
-    public Usuario(){
+    @OneToMany(mappedBy = "usuario")
+    private List<Producto> productos;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Orden> ordenes;
+
+    public Usuario() {
 
     }
 
     public Usuario(Integer id, String nombre, String username, String email, 
-    String direccion, String telefono, String tipo, String password){
+    String direccion, String telefono, String tipo, String password) {
         super();
         this.id = id;
         this.nombre = nombre;
@@ -91,6 +111,14 @@ public class Usuario {
         this.password = password;   
     }
 
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
+    }
+
     @Override
     public String toString() {
         return "Usuario [id=" + id + ", nombre=" + nombre + ", username=" + username + 
@@ -98,5 +126,3 @@ public class Usuario {
         ", tipo=" + tipo + ", password=" + password + "]";
     }
 }
-
-
